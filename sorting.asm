@@ -1,0 +1,31 @@
+; Bubble Sort
+.MODEL SMALL
+.STACK 100H
+.DATA
+    ARRAY DB 05H,03H,07H,01H,09H
+    LEN EQU $-ARRAY
+.CODE
+START:
+    MOV AX, @DATA
+    MOV DS, AX
+    
+    MOV CX, LEN-1
+OUTER:
+    MOV SI, 0
+    MOV DX, CX
+    
+INNER:
+    MOV AL, ARRAY[SI]
+    CMP AL, ARRAY[SI+1]
+    JLE NO_SWAP
+    XCHG AL, ARRAY[SI+1]
+    MOV ARRAY[SI], AL
+NO_SWAP:
+    INC SI
+    DEC DX
+    JNZ INNER
+    LOOP OUTER
+    
+    MOV AH, 4CH
+    INT 21H
+END START
